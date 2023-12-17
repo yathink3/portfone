@@ -189,7 +189,7 @@ export const projects = [
     iconUrl: pricewise,
     theme: 'btn-back-red',
     name: 'Carbon React Color Theme (vscode extension)',
-    description: 'The Carbon React Color Theme for Visual Studio Code offers a sleek and modern aesthetic tailored for React.js development, with carefully selected colors to enhance readability and reduce eye strain.',
+    description: 'The Carbon React Color Theme for Visual Studio Code offers a sleek and modern aesthetic tailored for React.js development , with carefully selected colors to enhance readability and reduce eye strain.',
     link: 'https://marketplace.visualstudio.com/items?itemName=yathink3.carbon-react-color-theme',
   },
   {
