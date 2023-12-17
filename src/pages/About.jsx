@@ -1,7 +1,8 @@
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-
+import { Link } from 'react-router-dom';
 import { CTA } from '../components';
 import { experiences, skills } from '../constants';
+import { arrow } from '../assets/icons';
 
 import 'react-vertical-timeline-component/style.min.css';
 
@@ -18,6 +19,11 @@ const About = () => {
           <br />
           In love with ReactJS! 💖/ A Passionate web dev | Senior Software Engineeer @X0PA AI | NextJS, TailwindCSS, NodeJS, SvelteJS, SvelteKit etc.
         </p>
+        <div className='flex items-center gap-2 font-poppins'>
+          <Link to={'/resume.pdf'} target='_blank' rel='noopener noreferrer' className='font-semibold text-blue-600 inline-flex'>
+            View in detail <img src={arrow} alt='arrow' className='mt-1 ml-1 w-4 h-4 object-contain' />
+          </Link>
+        </div>
       </div>
 
       <div className='py-10 flex flex-col'>
