@@ -11,7 +11,7 @@ const Home = () => {
   audioRef.current.volume = 0.4;
   audioRef.current.loop = true;
 
-  const [currentStage, setCurrentStage] = useState(5);
+  const [currentStage, setCurrentStage] = useState(0);
   const [isRotating, setIsRotating] = useState(false);
   const [roDir, setRoDir] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
@@ -25,26 +25,6 @@ const Home = () => {
       audioRef.current.pause();
     };
   }, [isPlayingMusic]);
-
-  useEffect(() => {
-    let bTimer = null;
-    let cTimer = null;
-    if (isRotating) {
-      setStopRotation(false);
-      return () => {
-        clearTimeout(bTimer);
-        clearTimeout(cTimer);
-      };
-    }
-    if (currentStage && ![1, 5].includes(currentStage)) {
-      bTimer = setTimeout(() => {
-        setStopRotation(true);
-      }, 900);
-      cTimer = setTimeout(() => {
-        setStopRotation(false);
-      }, 2000);
-    }
-  }, [currentStage]);
 
   const adjustBiplaneForScreenSize = () => {
     let scale, position;
@@ -77,15 +57,13 @@ const Home = () => {
   return (
     <section className='w-full h-screen relative'>
       <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
-        {currentStage && (
-          <HomeInfo
-            currentStage={currentStage}
-            startEngine={() => {
-              setStopRotation(false);
-              setIsPlayingMusic(true);
-            }}
-          />
-        )}
+        <HomeInfo
+          currentStage={currentStage}
+          startEngine={() => {
+            setStopRotation(false);
+            setIsPlayingMusic(true);
+          }}
+        />
       </div>
 
       <Canvas className={`w-full h-screen bg-transparent ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`} camera={{ near: 0.1, far: 1000 }}>
@@ -107,7 +85,7 @@ const Home = () => {
             setCurrentStage={setCurrentStage}
             position={island.position}
             // rotation={[0.12, 25, 0.1]}
-            rotation={[0.1, 4.7077, 0]}
+            rotation={[0.1, 5, 0]}
             scale={island.scale}
           />
           <Plane

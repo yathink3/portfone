@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { arrow } from '../assets/icons';
 
 const HomeInfo = ({ currentStage, startEngine }) => {
-  if (currentStage === 5) {
+  if (currentStage === 0) {
     return (
       <div className='info-box'>
         <p className='font-medium sm:text-xl text-center'>To Know about me, Start Engine</p>
