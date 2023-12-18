@@ -105,9 +105,13 @@ export function Island({ isRotating, setIsRotating, setCurrentStage, stopRotatio
 
   useFrame(() => {
     if (isRotating || stopRotation) return;
-    if (roDir) setRoDir(false);
-    islandRef.current.rotation.y -= 0.0008 * Math.PI;
-    rotationSpeed.current = -0.001;
+    if (roDir) {
+      islandRef.current.rotation.y += 0.0008 * Math.PI;
+      rotationSpeed.current = 0.001;
+    } else {
+      islandRef.current.rotation.y -= 0.0008 * Math.PI;
+      rotationSpeed.current = -0.001;
+    }
   });
 
   useEffect(() => {
