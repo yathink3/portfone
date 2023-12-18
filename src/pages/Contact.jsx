@@ -41,20 +41,12 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          showAlert({
-            show: true,
-            text: 'Thank you for your message 😃',
-            type: 'success',
-          });
+          showAlert({ show: true, text: 'Thank you for your message 😃', type: 'success' });
 
           setTimeout(() => {
             hideAlert(false);
             setCurrentAnimation('idle');
-            setForm({
-              name: '',
-              email: '',
-              message: '',
-            });
+            setForm({ name: '', email: '', message: '' });
           }, [3000]);
         },
         error => {
@@ -62,11 +54,7 @@ const Contact = () => {
           console.error(error);
           setCurrentAnimation('idle');
 
-          showAlert({
-            show: true,
-            text: "I didn't receive your message 😢",
-            type: 'danger',
-          });
+          showAlert({ show: true, text: "I didn't receive your message 😢", type: 'danger' });
         }
       );
   };
@@ -99,13 +87,7 @@ const Contact = () => {
       </div>
 
       <div className='lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]'>
-        <Canvas
-          camera={{
-            position: [0, 0, 5],
-            fov: 75,
-            near: 0.1,
-            far: 1000,
-          }}>
+        <Canvas camera={{ position: [0, 0, 5], fov: 75, near: 0.1, far: 1000 }}>
           <directionalLight position={[0, 0, 1]} intensity={2.5} />
           <ambientLight intensity={1} />
           <pointLight position={[5, 10, 0]} intensity={2} />
