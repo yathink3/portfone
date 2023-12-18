@@ -67,6 +67,9 @@ export function Island({ isRotating, setIsRotating, setCurrentStage, stopRotatio
       // Update the island's rotation based on the mouse/touch movement
       islandRef.current.rotation.y += delta * 0.01 * Math.PI;
 
+      // islandRef.current.rotation.x += delta * 0.01 * Math.PI;
+      // islandRef.current.rotation.z += delta * 0.01 * Math.PI;
+
       if (lastX.current > clientX) {
         if (roDir) setRoDir(false);
       } else {
@@ -135,6 +138,7 @@ export function Island({ isRotating, setIsRotating, setCurrentStage, stopRotatio
 
   // This function is called on each frame update
   useFrame(() => {
+    if (stopRotation) return;
     if (!isRotating) {
       // Apply damping factor
       rotationSpeed.current *= dampingFactor;
@@ -171,16 +175,16 @@ export function Island({ isRotating, setIsRotating, setCurrentStage, stopRotatio
 
     // Set the current stage based on the island's orientation
     switch (true) {
-      case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
+      case normalizedRotation >= 5.45 && normalizedRotation <= 5.95:
         setCurrentStage(4);
         break;
-      case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
+      case normalizedRotation >= 0.85 && normalizedRotation <= 1.4:
         setCurrentStage(3);
         break;
-      case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
+      case normalizedRotation >= 2.4 && normalizedRotation <= 2.7:
         setCurrentStage(2);
         break;
-      case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
+      case normalizedRotation >= 4.25 && normalizedRotation <= 4.85:
         setCurrentStage(1);
         break;
       default:

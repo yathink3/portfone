@@ -11,11 +11,11 @@ const Home = () => {
   audioRef.current.volume = 0.4;
   audioRef.current.loop = true;
 
-  const [currentStage, setCurrentStage] = useState(1);
+  const [currentStage, setCurrentStage] = useState(5);
   const [isRotating, setIsRotating] = useState(false);
   const [roDir, setRoDir] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
-  const [stopRotation, setStopRotation] = useState(false);
+  const [stopRotation, setStopRotation] = useState(true);
 
   useEffect(() => {
     if (isPlayingMusic) {
@@ -36,7 +36,7 @@ const Home = () => {
         clearTimeout(cTimer);
       };
     }
-    if (currentStage && currentStage !== 1) {
+    if (currentStage && ![1, 5].includes(currentStage)) {
       bTimer = setTimeout(() => {
         setStopRotation(true);
       }, 900);
@@ -76,7 +76,17 @@ const Home = () => {
 
   return (
     <section className='w-full h-screen relative'>
-      <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>{currentStage && <HomeInfo currentStage={currentStage} />}</div>
+      <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
+        {currentStage && (
+          <HomeInfo
+            currentStage={currentStage}
+            startEngine={() => {
+              setStopRotation(false);
+              setIsPlayingMusic(true);
+            }}
+          />
+        )}
+      </div>
 
       <Canvas className={`w-full h-screen bg-transparent ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`} camera={{ near: 0.1, far: 1000 }}>
         <Suspense fallback={<Loader />}>
@@ -88,8 +98,25 @@ const Home = () => {
 
           <Bird />
           <Sky isRotating={isRotating} />
-          <Island stopRotation={stopRotation} isRotating={isRotating} setIsRotating={setIsRotating} roDir={roDir} setRoDir={setRoDir} setCurrentStage={setCurrentStage} position={island.position} rotation={[0.1, 4.7077, 0]} scale={island.scale} />
-          <Plane stopRotation={stopRotation} position={biplane.position} rotation={roDir ? [0, 80, 0] : [0, 20.1, 0]} scale={biplane.scale} />
+          <Island
+            stopRotation={stopRotation}
+            isRotating={isRotating}
+            setIsRotating={setIsRotating}
+            roDir={roDir}
+            setRoDir={setRoDir}
+            setCurrentStage={setCurrentStage}
+            position={island.position}
+            // rotation={[0.12, 25, 0.1]}
+            rotation={[0.1, 4.7077, 0]}
+            scale={island.scale}
+          />
+          <Plane
+            stopRotation={stopRotation}
+            position={biplane.position}
+            rotation={roDir ? [0, 80, 0] : [0, 20, 0]}
+            //  rotation={[0, 20.1, 0]}
+            scale={biplane.scale}
+          />
         </Suspense>
       </Canvas>
 
