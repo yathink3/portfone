@@ -9,25 +9,23 @@
  * YOU DON'T HAVE TO WRITE EVERYTHING FROM SCRATCH
  */
 
-import { a } from "@react-spring/three";
-import { useEffect, useRef } from "react";
-import { useGLTF } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { a } from '@react-spring/three';
+import { useEffect, useRef, useState } from 'react';
+import { useGLTF } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
 
-import islandScene from "../assets/3d/island.glb";
+import islandScene from '../assets/3d/island.glb';
+import useDeviceOrientation from '../hooks/useDeviceOrientation';
 
-export function Island({
-  isRotating,
-  setIsRotating,
-  setCurrentStage,
-  currentFocusPoint,
-  ...props
-}) {
+export function Island({ isRotating, setIsRotating, setCurrentStage, currentStage, currentFocusPoint, ...props }) {
+  const { orientation, requestAccess, revokeAccess } = useDeviceOrientation();
+
   const islandRef = useRef();
   // Get access to the Three.js renderer and viewport
   const { gl, viewport } = useThree();
   const { nodes, materials } = useGLTF(islandScene);
 
+  const [stopRotation, setStopRotation] = useState(false);
   // Use a ref for the last mouse x position
   const lastX = useRef(0);
   // Use a ref for rotation speed
@@ -36,7 +34,7 @@ export function Island({
   const dampingFactor = 0.95;
 
   // Handle pointer (mouse or touch) down event
-  const handlePointerDown = (event) => {
+  const handlePointerDown = event => {
     event.stopPropagation();
     event.preventDefault();
     setIsRotating(true);
@@ -49,14 +47,14 @@ export function Island({
   };
 
   // Handle pointer (mouse or touch) up event
-  const handlePointerUp = (event) => {
+  const handlePointerUp = event => {
     event.stopPropagation();
     event.preventDefault();
     setIsRotating(false);
   };
 
   // Handle pointer (mouse or touch) move event
-  const handlePointerMove = (event) => {
+  const handlePointerMove = event => {
     event.stopPropagation();
     event.preventDefault();
     if (isRotating) {
@@ -79,60 +77,85 @@ export function Island({
   };
 
   // Handle keydown events
-  const handleKeyDown = (event) => {
-    if (event.key === "ArrowLeft") {
+  const handleKeyDown = event => {
+    if (event.key === 'ArrowLeft') {
       if (!isRotating) setIsRotating(true);
 
-      islandRef.current.rotation.y += 0.005 * Math.PI;
+      islandRef.current.rotation.y += 0.003 * Math.PI;
       rotationSpeed.current = 0.007;
-    } else if (event.key === "ArrowRight") {
+    } else if (event.key === 'ArrowRight') {
       if (!isRotating) setIsRotating(true);
 
-      islandRef.current.rotation.y -= 0.005 * Math.PI;
+      islandRef.current.rotation.y -= 0.003 * Math.PI;
       rotationSpeed.current = -0.007;
     }
   };
 
   // Handle keyup events
-  const handleKeyUp = (event) => {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+  const handleKeyUp = event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       setIsRotating(false);
     }
   };
 
   useEffect(() => {
+    if (currentStage) {
+      let bTimer = null;
+      let cTimer = null;
+      bTimer = setTimeout(() => {
+        setStopRotation(true);
+      }, 700);
+      cTimer = setTimeout(() => {
+        setStopRotation(false);
+      }, 1400);
+      return () => {
+        clearTimeout(bTimer);
+        clearTimeout(cTimer);
+      };
+    }
+  }, [currentStage]);
+
+  useFrame(() => {
+    if (isRotating || stopRotation) return;
+    islandRef.current.rotation.y -= 0.0008 * Math.PI;
+    rotationSpeed.current = -0.001;
+  });
+
+  useEffect(() => {
     // Add event listeners for pointer and keyboard events
     const canvas = gl.domElement;
-    canvas.addEventListener("pointerdown", handlePointerDown);
-    canvas.addEventListener("pointerup", handlePointerUp);
-    canvas.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
 
     // Remove event listeners when component unmounts
     return () => {
-      canvas.removeEventListener("pointerdown", handlePointerDown);
-      canvas.removeEventListener("pointerup", handlePointerUp);
-      canvas.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
     };
   }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
 
   // This function is called on each frame update
   useFrame(() => {
     // If not rotating, apply damping to slow down the rotation (smoothly)
-    if (!isRotating) {
-      // Apply damping factor
-      rotationSpeed.current *= dampingFactor;
+    // if (!isRotating) {
+    //   // Apply damping factor
+    //   rotationSpeed.current *= dampingFactor;
 
-      // Stop rotation when speed is very small
-      if (Math.abs(rotationSpeed.current) < 0.001) {
-        rotationSpeed.current = 0;
-      }
+    //   // Stop rotation when speed is very small
+    //   if (Math.abs(rotationSpeed.current) < 0.001) {
+    //     rotationSpeed.current = 0;
+    //   }
 
-      islandRef.current.rotation.y += rotationSpeed.current;
-    } else {
+    //   islandRef.current.rotation.y += rotationSpeed.current;
+    // } else
+
+    {
       // When rotating, determine the current stage based on island's orientation
       const rotation = islandRef.current.rotation.y;
 
@@ -152,8 +175,7 @@ export function Island({
        *     always stays within the range of 0 to 2 * Math.PI, which is equivalent to a full
        *     circle in radians.
        */
-      const normalizedRotation =
-        ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 
       // Set the current stage based on the island's orientation
       switch (true) {
@@ -178,34 +200,13 @@ export function Island({
   return (
     // {Island 3D model from: https://sketchfab.com/3d-models/foxs-islands-163b68e09fcc47618450150be7785907}
     <a.group ref={islandRef} {...props}>
-      <mesh
-        geometry={nodes.polySurface944_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface945_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface946_tree2_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface947_tree1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface948_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.polySurface949_tree_body_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
-      <mesh
-        geometry={nodes.pCube11_rocks1_0.geometry}
-        material={materials.PaletteMaterial001}
-      />
+      <mesh geometry={nodes.polySurface944_tree_body_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.polySurface945_tree1_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.polySurface946_tree2_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.polySurface947_tree1_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.polySurface948_tree_body_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.polySurface949_tree_body_0.geometry} material={materials.PaletteMaterial001} />
+      <mesh geometry={nodes.pCube11_rocks1_0.geometry} material={materials.PaletteMaterial001} />
     </a.group>
   );
 }
