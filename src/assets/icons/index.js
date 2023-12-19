@@ -26,10 +26,12 @@ import arrow from './arrow.svg';
 import contact from './contact.svg';
 import soundon from './soundon.png';
 import soundoff from './soundoff.png';
+import pauseicon from './pause-button.svg';
+import playicon from './play-button.svg';
 import bridgelabz from './bridgelabz.png';
 import isoaccess from './isoaccess.png';
 import valorpaytech from './valorpaytech.png';
 import recro from './recrosoft.png';
 import x0paai from './x0paai.png';
 
-export { css, express, git, github, html, javascript, mongodb, motion, mui, nextjs, nodejs, react, redux, sass, tailwindcss, typescript, linkedin, twitter, car, estate, pricewise, snapgram, summiz, threads, arrow, contact, soundon, soundoff, bridgelabz, isoaccess, valorpaytech, recro, x0paai };
+export { css, express, git, github, html, javascript, mongodb, motion, mui, nextjs, nodejs, react, redux, sass, tailwindcss, typescript, linkedin, twitter, car, estate, pricewise, snapgram, summiz, threads, arrow, contact, soundon, soundoff, pauseicon, playicon, bridgelabz, isoaccess, valorpaytech, recro, x0paai };
