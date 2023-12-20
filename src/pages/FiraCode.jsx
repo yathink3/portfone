@@ -7,7 +7,7 @@ const FiraCode = () => {
         Here is the <span className='blue-gradient_text font-semibold drop-shadow'>Firacode</span>
       </h3>
       <div className='mt-5 flex flex-col gap-3 text-slate-500'>
-        <div className='relative'>
+        <div className='relative mt-3'>
           <Link to={'/FiraCode.ttf'} target='_blank' className='neo-brutalism-white neo-btn'>
             Download Firacode
           </Link>
