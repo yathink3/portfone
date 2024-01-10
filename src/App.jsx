@@ -4,6 +4,8 @@ import { Footer, Navbar } from './components';
 import { About, Contact, Home, Projects } from './pages';
 import FiraCode from './pages/FiraCode';
 
+import('./models').then();
+
 const App = () => {
   return (
     <main className='bg-slate-300/20'>
