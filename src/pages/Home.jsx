@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 
 import sakura from '../assets/sakura.mp3';
-import { HomeInfo, Loader } from '../components';
+import { HomeInfo, Loader, Chatbot } from '../components';
 import { soundoff, soundon, pauseicon, playicon } from '../assets/icons';
 import { Bird, Island, Plane, Sky } from '../models';
 
@@ -100,32 +100,24 @@ const Home = () => {
 
       <div className='absolute bottom-2 left-2'>
         <img src={!isPlayingMusic ? soundoff : soundon} alt='jukebox' onClick={() => setIsPlayingMusic(!isPlayingMusic)} className='w-10 h-10 cursor-pointer object-contain' />
-      </div>
-      <div className='absolute bottom-2 right-2'>
-        {!stopRotation && (
-          <img
-            src={pauseicon}
-            alt='playpause'
-            onClick={() => {
+        <div className='h-2' />
+        <img
+          src={stopRotation ? playicon : pauseicon}
+          alt='playpause'
+          onClick={() => {
+            if (stopRotation) {
+              setStopRotation(false);
+              setIsPlayingMusic(true);
+            } else {
               setStopRotation(true);
               setIsPlayingMusic(false);
               setCurrentStage(0);
-            }}
-            className='w-10 h-10 cursor-pointer object-contain'
-          />
-        )}
-        {stopRotation && (
-          <img
-            src={playicon}
-            alt='playpause'
-            onClick={() => {
-              setStopRotation(false);
-              setIsPlayingMusic(true);
-            }}
-            className='w-10 h-10 cursor-pointer object-contain'
-          />
-        )}
+            }
+          }}
+          className='w-10 h-10 cursor-pointer object-contain'
+        />
       </div>
+      <Chatbot />
     </section>
   );
 };
