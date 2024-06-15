@@ -20,7 +20,7 @@ const Chatbot = () => {
           {/* Heading */}
           <div className='flex flex-col space-y-1.5 pb-6'>
             <h2 className='font-semibold text-lg tracking-tight'>Chatbot</h2>
-            <p className='text-sm text-[#6b7280] leading-3'>Ask me anything related to my resume; I am here to assist you.</p>
+            <p className='text-sm text-[#6b7280] leading-3'>Ask me anything; I am here to help you.</p>
           </div>
 
           {/* Chat Container */}
