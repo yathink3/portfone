@@ -16,7 +16,14 @@ const Chatbot = () => {
       </button>
 
       {isChatOpen && (
-        <div style={{ boxShadow: '0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05)' }} className='fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white p-6 rounded-lg border border-[#e5e7eb] w-[440px] h-[634px]'>
+        <div style={{ boxShadow: '0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05)' }} className='z-20 fixed bg-white p-6 md:rounded-lg md:border md:border-[#e5e7eb] w-full h-full md:w-[440px] md:h-[634px] bottom-0 right-0 m-0 md:bottom-[calc(4rem+1.5rem)] md:mr-4'>
+          {/* Close Button */}
+          <button onClick={toggleChat} className='absolute top-2 right-2 bg-transparent text-gray-400 hover:text-gray-900 cursor-pointer'>
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='w-6 h-6'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+            </svg>
+          </button>
+
           {/* Heading */}
           <div className='flex flex-col space-y-1.5 pb-6'>
             <h2 className='font-semibold text-lg tracking-tight'>Chatbot</h2>

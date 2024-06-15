@@ -117,7 +117,7 @@ const Home = () => {
           className='w-10 h-10 cursor-pointer object-contain'
         />
       </div>
-      {/* <Chatbot /> */}
+      <Chatbot />
     </section>
   );
 };
