@@ -31,7 +31,7 @@ const Chatbot = () => {
           </div>
 
           {/* Chat Container */}
-          <div className='pr-4 h-[474px]' style={{ minWidth: '100%', display: 'table' }}>
+          <div className='pr-4 h-[calc(100vh-150px)] md:h-[474px]' style={{ minWidth: '100%', display: 'table' }}>
             {/* Chat Message AI */}
             <div className='flex gap-3 my-4 text-gray-600 text-sm flex-1'>
               <span className='relative flex shrink-0 overflow-hidden rounded-full w-8 h-8'>
