@@ -33,7 +33,7 @@ const Chatbot = () => {
           {/* Chat Container */}
           <div className='h-[calc(100vh-150px)] md:h-[474px]' style={{ minWidth: '100%', display: 'table' }}>
             {/* Chat Message AI */}
-            <div className='flex gap-2 my-4 text-gray-600 text-sm flex-1 mr-5'>
+            <div className='flex gap-2 my-3 text-gray-600 text-sm flex-1 mr-5'>
               <span className='relative flex shrink-0 overflow-hidden rounded-full w-8 h-8'>
                 <div className='rounded-full bg-gray-100 border p-1'>
                   <svg stroke='none' fill='black' strokeWidth='1.5' viewBox='0 0 24 24' aria-hidden='true' height='20' width='20' xmlns='http://www.w3.org/2000/svg'>
@@ -51,7 +51,7 @@ const Chatbot = () => {
             </div>
 
             {/* User Chat Message */}
-            <div className='flex justify-end gap-2 my-4 text-gray-600 text-sm flex-1 ml-5'>
+            <div className='flex justify-end gap-2 my-3 text-gray-600 text-sm flex-1 ml-5'>
               <p className='leading-relaxed'>
                 <span className='flex justify-end block font-bold text-gray-700'>You </span>
                 <div className='border border-gray-200 px-2 py-1 rounded-2xl rounded-tr-none bg-gray-100'>fewafef</div>
@@ -66,7 +66,7 @@ const Chatbot = () => {
             </div>
 
             {/* AI Chat Message */}
-            <div className='flex gap-2 my-4 text-gray-600 text-sm flex-1 mr-5'>
+            <div className='flex gap-2 my-3 text-gray-600 text-sm flex-1 mr-5'>
               <span className='relative flex shrink-0 overflow-hidden rounded-full w-8 h-8'>
                 <div className='rounded-full bg-gray-100 border p-1'>
                   <svg stroke='none' fill='black' strokeWidth='1.5' viewBox='0 0 24 24' aria-hidden='true' height='20' width='20' xmlns='http://www.w3.org/2000/svg'>
